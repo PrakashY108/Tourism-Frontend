@@ -48,13 +48,13 @@ const Home = () => {
     <AuthContainer mainContainerStyle={{flex: 1}}>
       <CustomHeader
         isHome
-        headerTitle="Infint"
+        headerTitle="Infinty"
         leftIcon={<Image style={styles.icon} source={Dummy.userDummy} />}
       />
       <ScrollView contentContainerStyle={{paddingBottom: 100}}>
-        <View style={{alignItems: 'center'}}>
+       
           <MakeTrip />
-        </View>
+      
         {/* Featured */}
         <Text style={styles.sectionTitle}>Featured Places</Text>
         <FlatList

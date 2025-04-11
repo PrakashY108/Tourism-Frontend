@@ -1,5 +1,5 @@
-import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
-import React from 'react';
+import {View, Text, TouchableOpacity, StyleSheet, Image, Keyboard} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationRoutes} from '../shared/constants/NavigationRoutes';
@@ -18,45 +18,53 @@ import {Colors} from '../shared/themes/colors';
 import {heightPixel} from '../utils/responsiveDimensions';
 import globalStyles from '../shared/themes/globalStyles';
 
-const CustomTabBar = ({state, descriptors, navigation}: any) => {
+const CustomTabBar = ({ state, descriptors, navigation }: any) => {
   const getIconName = (routeName: string, isFocused: boolean) => {
     switch (routeName) {
       case NavigationRoutes.home:
-        return !isFocused ? Images.icons.home : Images.icons.home_fill;
+        return isFocused ? Images.icons.home_fill : Images.icons.home;
       case NavigationRoutes.ride:
-        return !isFocused ? Images.icons.rides : Images.icons.rides_fill;
+        return isFocused ? Images.icons.rides_fill : Images.icons.rides;
       case NavigationRoutes.history:
-        return !isFocused ? Images.icons.history : Images.icons.history_fill;
+        return isFocused ? Images.icons.history_fill : Images.icons.history;
       case NavigationRoutes.account:
-        return !isFocused ? Images.icons.account : Images.icons.account_fill;
+        return isFocused ? Images.icons.account_fill : Images.icons.account;
       default:
         return 'ellipse';
     }
   };
 
   return (
-    <View style={[styles.tabContainer]}>
+    <View style={styles.tabContainer}>
       {state.routes.map((route: any, index: number) => {
-        const {options} = descriptors[route.key];
+        const { options } = descriptors[route.key];
         const isFocused = state.index === index;
+
+        const onPress = () => {
+          if (!isFocused) {
+            navigation.navigate(route.name);
+          }
+        };
 
         return (
           <TouchableOpacity
             key={route.name}
-            onPress={() => navigation.navigate(route.name)}
-            style={[styles.tabButton]}>
-            <View style={[styles.iconWrapper, isFocused && styles.activeTab]}>
-              <Image
-                style={{
-                  height: isFocused ? 30 : 20,
-                  width: isFocused ? 30 : 20,
-                  tintColor: isFocused ? '#6D4AFF' : Colors.black,
-                }}
-                source={getIconName(route.name, isFocused)}
-              />
-            </View>
+            accessibilityRole="button"
+            onPress={onPress}
+            style={[styles.tabButton, isFocused && styles.activeTabButton]}>
+            <Image
+              source={getIconName(route.name, isFocused)}
+              style={[
+                styles.icon,
+                {
+                  tintColor: isFocused ? Colors.primary : Colors.grey,
+                  height: isFocused ? heightPixel(26) : heightPixel(22),
+                  width: isFocused ? heightPixel(26) : heightPixel(22),
+                },
+              ]}
+            />
             {isFocused && (
-              <Text style={styles.activeText}>{route.name.toUpperCase()}</Text>
+              <Text style={styles.label}>{route.name.toUpperCase()}</Text>
             )}
           </TouchableOpacity>
         );
@@ -64,12 +72,23 @@ const CustomTabBar = ({state, descriptors, navigation}: any) => {
     </View>
   );
 };
+
 const BottomNavigation = () => {
   const Tab = createBottomTabNavigator();
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  useEffect(() => {
+    const showSub = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
+    const hideSub = Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, []);
   return (
     <Tab.Navigator
       screenOptions={{headerShown: false}}
-      tabBar={props => <CustomTabBar {...props} />}>
+    
+      tabBar={props => (isKeyboardVisible ? null : <CustomTabBar {...props} />)}>
       <Tab.Screen name={NavigationRoutes.home} component={Home} />
       <Tab.Screen name={NavigationRoutes.ride} component={Rides} />
       <Tab.Screen name={NavigationRoutes.history} component={History} />
@@ -103,36 +122,39 @@ const Navigation = () => {
 };
 
 export default Navigation;
-
 const styles = StyleSheet.create({
   tabContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    backgroundColor: Colors.background,
-    borderRadius: 10,
-    height: heightPixel(50),
-    alignItems: 'center',
-    borderWidth: 0.5,
-    borderColor: Colors.white,
-    shadowColor: Colors.black,
-    shadowOffset: {width: 0, height: 1},
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    marginBottom: heightPixel(10),
+    paddingVertical: 10,
+    paddingBottom: Platform.OS === 'ios' ? 25 : 12,
+    backgroundColor: 'white',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 10,
   },
   tabButton: {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+    paddingVertical: 6,
+    borderRadius: 20,
   },
-  iconWrapper: {
-    padding: 10,
-    borderRadius: 50,
+  activeTabButton: {
+    backgroundColor: '#F5F5F5',
   },
-  activeTab: {},
-  activeText: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    marginTop: 5,
+  icon: {
+    resizeMode: 'contain',
+    marginBottom: 2,
+  },
+  label: {
+    fontSize: 10,
+    color: Colors.primary,
+    fontWeight: '600',
+    marginTop: 2,
   },
 });
