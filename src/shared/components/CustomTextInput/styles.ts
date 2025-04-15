@@ -15,12 +15,12 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.primary,
     flexDirection: 'row',
-    alignItems: 'center', 
-    paddingHorizontal: 10, 
+    alignItems: 'center',
+    paddingHorizontal: 10,
   },
   input: {
     fontSize: 13,
-    flex: 1, 
+    flex: 1,
     paddingHorizontal: 10,
   },
   iconStyle: {

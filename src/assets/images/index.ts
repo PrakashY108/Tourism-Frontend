@@ -20,8 +20,7 @@ export const Images = {
     timer: require('../images/icons/Timer1-Linear-80px.png'),
     upArrow: require('../images/icons/ArrowUp2-Linear-80px.png'),
     downArrow: require('../images/icons/ArrowDown2-Linear-80px.png'),
-    
-    
+    edit: require('../images/icons/editing.png'),
   },
 };
 export const Dummy = {
