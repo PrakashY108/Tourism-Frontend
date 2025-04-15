@@ -8,5 +8,10 @@ export const NavigationRoutes = {
     home:"Home",
     account:"Account",
     history:"History",
-    ride:'Ride'
+    ride:'Ride',
+    myTrips: 'My Trips',
+    rewards:"Rewards",
+    profile:"Profile",
+    TermsAndCondition:"Terms And Conditions",
+    
 };

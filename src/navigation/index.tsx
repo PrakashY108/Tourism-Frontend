@@ -1,5 +1,12 @@
-import {View, Text, TouchableOpacity, StyleSheet, Image, Keyboard} from 'react-native';
-import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Keyboard,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationRoutes} from '../shared/constants/NavigationRoutes';
@@ -17,8 +24,12 @@ import {Images} from '../assets/images';
 import {Colors} from '../shared/themes/colors';
 import {heightPixel} from '../utils/responsiveDimensions';
 import globalStyles from '../shared/themes/globalStyles';
+import MyTrips from '../screens/Account/screens/MyTrips';
+import Rewards from '../screens/Account/screens/Rewards';
+import TermsAndConditions from '../screens/Account/screens/TermsAndConditions';
+import Profile from '../screens/Account/screens/Profile';
 
-const CustomTabBar = ({ state, descriptors, navigation }: any) => {
+const CustomTabBar = ({state, descriptors, navigation}: any) => {
   const getIconName = (routeName: string, isFocused: boolean) => {
     switch (routeName) {
       case NavigationRoutes.home:
@@ -37,7 +48,7 @@ const CustomTabBar = ({ state, descriptors, navigation }: any) => {
   return (
     <View style={styles.tabContainer}>
       {state.routes.map((route: any, index: number) => {
-        const { options } = descriptors[route.key];
+        const {options} = descriptors[route.key];
         const isFocused = state.index === index;
 
         const onPress = () => {
@@ -77,8 +88,12 @@ const BottomNavigation = () => {
   const Tab = createBottomTabNavigator();
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   useEffect(() => {
-    const showSub = Keyboard.addListener('keyboardDidShow', () => setKeyboardVisible(true));
-    const hideSub = Keyboard.addListener('keyboardDidHide', () => setKeyboardVisible(false));
+    const showSub = Keyboard.addListener('keyboardDidShow', () =>
+      setKeyboardVisible(true),
+    );
+    const hideSub = Keyboard.addListener('keyboardDidHide', () =>
+      setKeyboardVisible(false),
+    );
     return () => {
       showSub.remove();
       hideSub.remove();
@@ -87,8 +102,9 @@ const BottomNavigation = () => {
   return (
     <Tab.Navigator
       screenOptions={{headerShown: false}}
-    
-      tabBar={props => (isKeyboardVisible ? null : <CustomTabBar {...props} />)}>
+      tabBar={props =>
+        isKeyboardVisible ? null : <CustomTabBar {...props} />
+      }>
       <Tab.Screen name={NavigationRoutes.home} component={Home} />
       <Tab.Screen name={NavigationRoutes.ride} component={Rides} />
       <Tab.Screen name={NavigationRoutes.history} component={History} />
@@ -107,6 +123,13 @@ const Navigation = () => {
         <Stack.Screen name={NavigationRoutes.splash} component={Splash} />
         <Stack.Screen name={NavigationRoutes.login} component={Login} />
         <Stack.Screen name={NavigationRoutes.register} component={Register} />
+        <Stack.Screen name={NavigationRoutes.myTrips} component={MyTrips} />
+        <Stack.Screen name={NavigationRoutes.rewards} component={Rewards} />
+        <Stack.Screen name={NavigationRoutes.profile} component={Profile} />
+        <Stack.Screen
+          name={NavigationRoutes.TermsAndCondition}
+          component={TermsAndConditions}
+        />
         <Stack.Screen
           name={NavigationRoutes.forgotPassword}
           component={ForgotPassword}
@@ -132,7 +155,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: -4 },
+    shadowOffset: {width: 0, height: -4},
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 10,
