@@ -71,9 +71,7 @@ const History = () => {
   return (
     <AuthContainer>
       <CustomHeader
-        leftIcon={
-          <Image source={Images.icons.right_arrow} style={styles.icon} />
-        }
+        
         headerTitle="History"
       />
       <FlatList

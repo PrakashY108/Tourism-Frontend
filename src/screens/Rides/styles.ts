@@ -48,4 +48,27 @@ export const styles = StyleSheet.create({
     transform: [{scaleX: -1}],
     tintColor: Colors.white,
   },
+  tabContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginVertical: 10,
+    paddingHorizontal: 10,
+  },
+  tabButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+    backgroundColor: '#f0f0f0',
+  },
+  activeTabButton: {
+    backgroundColor: Colors.primary,
+  },
+  tabText: {
+    fontSize: 14,
+    color: '#333',
+  },
+  activeTabText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
 });

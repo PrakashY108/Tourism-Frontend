@@ -1,9 +1,9 @@
-import { View, Text, Image, FlatList } from 'react-native';
-import React from 'react';
+import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
 import AuthContainer from '../../shared/components/AuthContainer';
 import CustomHeader from '../../shared/components/CustomHeader';
 import RNBounceable from '@freakycoder/react-native-bounceable';
-import { styles } from './styles'; // Create or update as needed
+import { styles } from './styles'; // Make sure to update/add styles below
 import { Images } from '../../assets/images';
 
 const rideData = [
@@ -39,7 +39,13 @@ const rideData = [
   },
 ];
 
+const TABS = ['Completed', 'Upcoming', 'Canceled'];
+
 const Rides = () => {
+  const [activeTab, setActiveTab] = useState('Completed');
+
+  const filteredData = rideData.filter(item => item.status === activeTab);
+
   const renderItem = ({ item }) => (
     <RNBounceable style={styles.card}>
       <View style={styles.historyItem}>
@@ -60,8 +66,8 @@ const Rides = () => {
                 item.status === 'Completed'
                   ? '#D4EDDA'
                   : item.status === 'Upcoming'
-                  ? '#D1ECF1'
-                  : '#F8D7DA',
+                    ? '#D1ECF1'
+                    : '#F8D7DA',
             },
           ]}>
           <Text
@@ -72,8 +78,8 @@ const Rides = () => {
                   item.status === 'Completed'
                     ? '#155724'
                     : item.status === 'Upcoming'
-                    ? '#0C5460'
-                    : '#721C24',
+                      ? '#0C5460'
+                      : '#721C24',
               },
             ]}>
             {item.status}
@@ -86,16 +92,40 @@ const Rides = () => {
   return (
     <AuthContainer>
       <CustomHeader
-        leftIcon={
-          <Image source={Images.icons.right_arrow} style={styles.icon} />
-        }
         headerTitle="My Rides"
       />
+
+      {/* Custom Top Tabs */}
+      <View style={styles.tabContainer}>
+        {TABS.map(tab => (
+          <TouchableOpacity
+            key={tab}
+            onPress={() => setActiveTab(tab)}
+            style={[
+              styles.tabButton,
+              activeTab === tab && styles.activeTabButton,
+            ]}>
+            <Text
+              style={[
+                styles.tabText,
+                activeTab === tab && styles.activeTabText,
+              ]}>
+              {tab}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
       <FlatList
-        data={rideData}
+        data={filteredData}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         contentContainerStyle={{ paddingBottom: 20 }}
+        ListEmptyComponent={
+          <Text style={{ textAlign: 'center', marginTop: 20 }}>
+            No {activeTab} rides available.
+          </Text>
+        }
       />
     </AuthContainer>
   );
