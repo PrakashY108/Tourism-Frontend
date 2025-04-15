@@ -1,33 +1,33 @@
-import {View, Text, StyleSheet, ImageBackground, Pressable} from 'react-native';
-import React, {useEffect} from 'react';
+import { View, Text, StyleSheet, ImageBackground, Pressable } from 'react-native';
+import React, { useEffect } from 'react';
 import AuthContainer from '../../../shared/components/AuthContainer';
 import globalStyles from '../../../shared/themes/globalStyles';
 import TitleText from '../../../shared/components/TitleText';
 import CustomTextInput from '../../../shared/components/CustomTextInput';
-import {styles} from './styles';
-import {Strings} from '../../../localization/i18n';
+import { styles } from './styles';
+import { Strings } from '../../../localization/i18n';
 import CustomButton from '../../../shared/components/CustomButton';
-import {Images} from '../../../assets/images';
-import {Colors} from '../../../shared/themes/colors';
-import {NavigationRoutes} from '../../../shared/constants/NavigationRoutes';
+import { Images } from '../../../assets/images';
+import { Colors } from '../../../shared/themes/colors';
+import { NavigationRoutes } from '../../../shared/constants/NavigationRoutes';
 import AppLogo from '../../../shared/components/AppLogo';
-import {Formik} from 'formik';
-import {LoginSchema} from '../../../utils/schemas';
+import { Formik } from 'formik';
+import { LoginSchema } from '../../../utils/schemas';
 
-const Login = ({navigation}: any) => {
+const Login = ({ navigation }: any) => {
   const initialValues = {
     email: '',
     password: '',
   };
   const handleSubmit = values => {
-    
+
     navigation.replace(NavigationRoutes.main)
   };
   return (
     <AuthContainer mainContainerStyle={globalStyles.container}>
       <Formik
         initialValues={initialValues}
-        validationSchema={LoginSchema}
+        // validationSchema={LoginSchema}
         onSubmit={handleSubmit}>
         {({
           values,
@@ -35,7 +35,7 @@ const Login = ({navigation}: any) => {
           touched,
           errors,
           handleSubmit,
-         
+
         }) => (
           <>
             <ImageBackground
@@ -46,12 +46,12 @@ const Login = ({navigation}: any) => {
                   styles.container,
                   globalStyles.paddingHorizontal10,
                   globalStyles.paddingVertical40,
-                  ,{gap:10}
+                  , { gap: 10 }
                 ]}>
                 <AppLogo />
                 <TitleText
                   viewStyle={globalStyles.marginVertical20}
-                  textStyle={{color: Colors.primary}}
+                  textStyle={{ color: Colors.primary }}
                   titleText={Strings.welcome_back}
                 />
                 <CustomTextInput
@@ -62,7 +62,7 @@ const Login = ({navigation}: any) => {
                   onChangeText={handleChange('email')}
                   errorName="email"
                   errors={touched.email && errors}
-                 
+
                 />
                 <CustomTextInput
                   mainStyle={styles.input}

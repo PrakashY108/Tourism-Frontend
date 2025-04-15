@@ -1,8 +1,8 @@
-import {View, Text, ViewStyle, TextStyle} from 'react-native';
+import { View, Text, ViewStyle, TextStyle } from 'react-native';
 import React from 'react';
 import RNBounceable from '@freakycoder/react-native-bounceable';
 import globalStyles from '../../themes/globalStyles';
-import {styles} from './styles';
+import { styles } from './styles';
 
 interface Buttontypes {
   mainButtonstyle?: ViewStyle;

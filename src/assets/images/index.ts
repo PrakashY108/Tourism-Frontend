@@ -4,8 +4,8 @@ export const Images = {
   icons: {
     home: require('../images/icons/home.png'),
     home_fill: require('../images/icons/home_fill.png'),
-    rides: require('../images/icons/ride.png'),
-    rides_fill: require('../images/icons/ride_fill.png'),
+    rides: require('../images/icons/car-wash_fill.png'),
+    rides_fill: require('../images/icons/car-wash.png'),
     history: require('../images/icons/history.png'),
     history_fill: require('../images/icons/history_fill.png'),
     account: require('../images/icons/account.png'),
@@ -16,6 +16,10 @@ export const Images = {
     logout: require('../images/icons/logout.png'),
     rewards: require('../images/icons/rewards.png'),
     support: require('../images/icons/support.png'),
+    cross: require('../images/icons/close.png'),
+    timer: require('../images/icons/Timer1-Linear-80px.png'),
+    upArrow: require('../images/icons/ArrowUp2-Linear-80px.png'),
+    downArrow: require('../images/icons/ArrowDown2-Linear-80px.png'),
     
     
   },
