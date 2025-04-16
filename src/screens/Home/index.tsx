@@ -5,8 +5,9 @@ import {
   FlatList,
   TouchableOpacity,
   ScrollView,
+  Keyboard,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AuthContainer from '../../shared/components/AuthContainer';
 import CustomHeader from '../../shared/components/CustomHeader';
 import {Dummy, Images} from '../../assets/images';
@@ -17,6 +18,19 @@ import SuggestedCard from './components/SuggestedCard';
 import MakeTrip from './components/MakeTrip';
 
 const Home = () => {
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+    useEffect(() => {
+      const showSub = Keyboard.addListener('keyboardDidShow', () =>
+        setKeyboardVisible(true),
+      );
+      const hideSub = Keyboard.addListener('keyboardDidHide', () =>
+        setKeyboardVisible(false),
+      );
+      return () => {
+        showSub.remove();
+        hideSub.remove();
+      };
+    }, []);
   const activeRide = {
     destination: 'Adalaj Stepwell',
     driver: 'Ravi Sharma',
@@ -48,14 +62,13 @@ const Home = () => {
     <AuthContainer mainContainerStyle={{flex: 1}}>
       <CustomHeader
         isHome
-        headerTitle="Infinty"
         leftIcon={<Image style={styles.icon} source={Dummy.userDummy} />}
       />
       <ScrollView contentContainerStyle={{paddingBottom: 100}}>
        
           <MakeTrip />
       
-        {/* Featured */}
+       
         <Text style={styles.sectionTitle}>Featured Places</Text>
         <FlatList
           data={featuredPlaces}
@@ -87,7 +100,7 @@ const Home = () => {
         />
       </ScrollView>
       {/* Active Ride */}
-      <TouchableOpacity activeOpacity={1} style={styles.activeRideCard}>
+      {!isKeyboardVisible &&<TouchableOpacity activeOpacity={1} style={styles.activeRideCard}>
         <View>
           <Text style={styles.rideTitle}>
             Active Ride to {activeRide.destination}
@@ -97,7 +110,7 @@ const Home = () => {
           </Text>
         </View>
         <Image source={Images.icons.right_arrow} style={styles.arrowIcon} />
-      </TouchableOpacity>
+      </TouchableOpacity>}
     </AuthContainer>
   );
 };

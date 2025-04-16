@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Image,
   Keyboard,
+  Platform,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
@@ -28,6 +29,7 @@ import MyTrips from '../screens/Account/screens/MyTrips';
 import Rewards from '../screens/Account/screens/Rewards';
 import TermsAndConditions from '../screens/Account/screens/TermsAndConditions';
 import Profile from '../screens/Account/screens/Profile';
+import RidesDetail from '../screens/Rides/screens/RidesDetail';
 
 const CustomTabBar = ({state, descriptors, navigation}: any) => {
   const getIconName = (routeName: string, isFocused: boolean) => {
@@ -126,6 +128,7 @@ const Navigation = () => {
         <Stack.Screen name={NavigationRoutes.myTrips} component={MyTrips} />
         <Stack.Screen name={NavigationRoutes.rewards} component={Rewards} />
         <Stack.Screen name={NavigationRoutes.profile} component={Profile} />
+        <Stack.Screen name={NavigationRoutes.ridesDetail} component={RidesDetail} />
         <Stack.Screen
           name={NavigationRoutes.TermsAndCondition}
           component={TermsAndConditions}

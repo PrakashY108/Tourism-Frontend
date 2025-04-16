@@ -1,10 +1,11 @@
-import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import {View, Text, Image, FlatList, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
 import AuthContainer from '../../shared/components/AuthContainer';
 import CustomHeader from '../../shared/components/CustomHeader';
 import RNBounceable from '@freakycoder/react-native-bounceable';
-import { styles } from './styles'; // Make sure to update/add styles below
-import { Images } from '../../assets/images';
+import {styles} from './styles';
+import {Images} from '../../assets/images';
+import {NavigationRoutes} from '../../shared/constants/NavigationRoutes';
 
 const rideData = [
   {
@@ -41,13 +42,15 @@ const rideData = [
 
 const TABS = ['Completed', 'Upcoming', 'Canceled'];
 
-const Rides = () => {
+const Rides = ({navigation}: any) => {
   const [activeTab, setActiveTab] = useState('Completed');
 
   const filteredData = rideData.filter(item => item.status === activeTab);
 
-  const renderItem = ({ item }) => (
-    <RNBounceable style={styles.card}>
+  const renderItem = ({item}:any) => (
+    <RNBounceable
+      style={styles.card}
+      onPress={()=>navigation.navigate(NavigationRoutes.ridesDetail, {ride: item})}>
       <View style={styles.historyItem}>
         <View style={styles.historyTextContainer}>
           <Text style={styles.placeName}>Driver: {item.driverName}</Text>
@@ -66,8 +69,8 @@ const Rides = () => {
                 item.status === 'Completed'
                   ? '#D4EDDA'
                   : item.status === 'Upcoming'
-                    ? '#D1ECF1'
-                    : '#F8D7DA',
+                  ? '#D1ECF1'
+                  : '#F8D7DA',
             },
           ]}>
           <Text
@@ -78,8 +81,8 @@ const Rides = () => {
                   item.status === 'Completed'
                     ? '#155724'
                     : item.status === 'Upcoming'
-                      ? '#0C5460'
-                      : '#721C24',
+                    ? '#0C5460'
+                    : '#721C24',
               },
             ]}>
             {item.status}
@@ -91,9 +94,7 @@ const Rides = () => {
 
   return (
     <AuthContainer>
-      <CustomHeader
-        headerTitle="My Rides"
-      />
+      <CustomHeader headerTitle="My Rides" />
 
       {/* Custom Top Tabs */}
       <View style={styles.tabContainer}>
@@ -120,9 +121,9 @@ const Rides = () => {
         data={filteredData}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-        contentContainerStyle={{ paddingBottom: 20 }}
+        contentContainerStyle={{paddingBottom: 20}}
         ListEmptyComponent={
-          <Text style={{ textAlign: 'center', marginTop: 20 }}>
+          <Text style={{textAlign: 'center', marginTop: 20}}>
             No {activeTab} rides available.
           </Text>
         }

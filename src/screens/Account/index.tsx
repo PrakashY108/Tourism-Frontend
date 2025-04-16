@@ -12,7 +12,7 @@ import {NavigationRoutes} from '../../shared/constants/NavigationRoutes';
 const Accounts = ({navigation}: any) => {
   const data = [
     {
-      title: 'Profile',
+      title: 'Edit Profile',
       icon: Images.icons.account,
       navigation: NavigationRoutes.profile,
     },
@@ -45,7 +45,7 @@ const Accounts = ({navigation}: any) => {
         {
           text: 'Log Out',
           onPress: () => {
-            // logoutUser();
+            navigation.replace(NavigationRoutes.login)
           },
         },
       ]);
@@ -57,7 +57,7 @@ const Accounts = ({navigation}: any) => {
           text: 'Delete',
           style: 'destructive',
           onPress: () => {
-            // deleteAccount();
+            navigation.replace(NavigationRoutes.login)
           },
         },
       ]);

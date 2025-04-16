@@ -19,7 +19,7 @@ const Login = ({ navigation }: any) => {
     email: '',
     password: '',
   };
-  const handleSubmit = values => {
+  const handleSubmit = (values:any) => {
 
     navigation.replace(NavigationRoutes.main)
   };

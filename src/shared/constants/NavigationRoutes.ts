@@ -13,5 +13,6 @@ export const NavigationRoutes = {
     rewards:"Rewards",
     profile:"Profile",
     TermsAndCondition:"Terms And Conditions",
+    ridesDetail:"Rides Detail"
     
 };
